@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 22 16:14:21 2021
+Created on Mon Mar 22 20:51:06 2021
 
-@author: axvargas
+@author: Asus
 """
-
-# Regresion
-
 #lybraries import
 import numpy as np
 import pandas as pd 
@@ -23,23 +20,26 @@ y = dataset.iloc[:,-1].values
 #divide dataset in training and testing
 """from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
+"""
+#AQUI SI SE NECESITA ESCALAR LOS DATOS
 #scaling variables
 from sklearn.preprocessing import StandardScaler
 sc_X = StandardScaler()
-X_train = sc_X.fit_transform(X_train)
-X_test = sc_X.transform(X_test) #El test tiene que ser escalado con la misma tranformacion que el de entranemaiento por eso se usa solo transform
-#y no es necesario en este caso porque es una variable de si o no 1 o 0
-"""
+sc_y = StandardScaler()
+X = sc_X.fit_transform(X)
+y = sc_y.fit_transform(y.reshape(-1, 1))
+
+
 
 #Ajustar la regresion con el dataset / Crear modelo de regresion
-## --code goes here--
-##regression = 
+from sklearn.svm import SVR
+regression = SVR(kernel = "rbf")
+regression.fit(X, np.ravel(y)) 
 
 
-#PRedicciones de nuestro modelos puesto para region manager-Partner: 6-7
-## --code goes here--
-## ex. regression.predict([[6.5]])
+#Predicciones de nuestro modelos puesto para region manager-Partner: 6-7
+# Destransformar para saber el valor en dolares correcto
+y_pred = sc_y.inverse_transform(regression.predict(sc_X.transform(np.array([[6.5]]))))
 ## ex. regression_2.predict(poly_reg.fit_transform([[6.5]]))
 
 
@@ -48,13 +48,14 @@ X_test = sc_X.transform(X_test) #El test tiene que ser escalado con la misma tra
 #Para suavizar la curva:
 X_grid = np.arange(min(X), max(X)+0.1, 0.1)
 X_grid  = X_grid.reshape(len(X_grid), 1)
-plt.scatter(X, y, color="red")
-## plt.plot(X, regression.predict(X), color="blue")
-## plt.plot(X_grid, regression_2.predict(poly_reg.fit_transform(X_grid)), color="blue") #OJO que se usa X_poly para realizar la preiccion na mas
-plt.title("Modelo de regresión polinómica")
+X_grid_inv = sc_X.inverse_transform(X_grid)
+X_inv = sc_X.inverse_transform(X)
+y_inv = sc_y.inverse_transform(y)
+plt.scatter(X_inv, y_inv, color="red")
+#plt.plot(X, regression.predict(X), color="blue")
+plt.plot(X_grid_inv, sc_y.inverse_transform(regression.predict(X_grid)), color="blue") #OJO que se usa X_poly para realizar la preiccion na mas
+plt.title("Modelo de regresión (SVR)")
 plt.xlabel("Posición del empleado")
 plt.ylabel("Sueldo ($)")
 plt.show()
-
-
 
