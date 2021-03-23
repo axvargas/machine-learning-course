@@ -36,7 +36,7 @@ ggplot() +
              colour="red") +
   geom_line(aes(x=dataset$Level,
                 y=predict(regression, 
-                          newdata = dataset$Level)),
+                          newdata = dataset)),
             colour="blue") +
   ggtitle("Modelo de regresión (SVR)")+
   xlab("Nivel del empleado")+
