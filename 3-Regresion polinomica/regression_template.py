@@ -7,7 +7,7 @@ Created on Mon Mar 22 16:14:21 2021
 
 # Regresion
 
-#lybraries import
+#libraries import
 import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt
