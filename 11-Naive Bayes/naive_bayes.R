@@ -1,5 +1,5 @@
-# Kernel SVM
-# Plantilla de clasificacion
+#Naive Bayes Classification
+
 
 #import dataset
 dataset = read.csv("Social_Network_Ads.csv")
@@ -21,11 +21,8 @@ testing_set[,1:2] = scale(testing_set[,1:2])
 
 #Ajustar el clasificador de regresion logistica con el conjunto de entrenamiento
 library(e1071)
-classifier = svm(formula = Purchased ~ .,
-                 data = training_set,
-                 type = 'C-classification',
-                 kernel = 'radial')
-
+classifier = naiveBayes(formula = Purchased ~ .,
+                        data = training_set)
 
 #Prediccion deos resultados del conjunto de testing
 #prob_pred = predict(classifier, type = "response", newdata = testing_set[,-3])#solo para logistica
@@ -49,7 +46,7 @@ colnames(grid_set) = c('Age', 'EstimatedSalary')
 ##Para las demas
 y_grid = predict(classifier, newdata = grid_set)
 plot(set[, -3],
-     main = 'Kernel SVM Classification (Training set)',
+     main = 'Naive Bayes Classification (Training set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), add = TRUE)
@@ -68,7 +65,7 @@ colnames(grid_set) = c('Age', 'EstimatedSalary')
 ##Para las demas
 y_grid = predict(classifier, newdata = grid_set)
 plot(set[, -3],
-     main = 'Kernel SVM Classification (Test set)',
+     main = 'Naive Bayes Classification (Test set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), add = TRUE)
