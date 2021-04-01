@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 24 23:40:35 2021
+Created on Wed Mar 31 15:30:56 2021
 
 @author: axvargas
 """
+# Clasificacion con Random Forest
 
-#Naive Bayes
 #libraries import
 import numpy as np
 import pandas as pd 
@@ -32,8 +32,8 @@ X_test = sc_X.transform(X_test)
 
 
 #Crear modelo de clasificacion
-from sklearn.naive_bayes import GaussianNB
-classifier = GaussianNB()
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier(n_estimators=100, criterion="entropy", random_state = 0)
 classifier.fit(X_train, y_train)
 
 
@@ -78,7 +78,7 @@ for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0],
                 X_set[y_set == j, 1],
                 c = ListedColormap(('red', 'green'))(i), label = j)
-plt.title('Clasificador Naive Bayes (Conjunto de Entrenamiento)')
+plt.title('Random Forest Classification (Conjunto de Entrenamiento)')
 plt.xlabel('Edad')
 plt.ylabel('Sueldo Estimado')
 plt.legend()
@@ -114,7 +114,7 @@ for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0],
                 X_set[y_set == j, 1],
                 c = ListedColormap(('red', 'green'))(i), label = j)
-plt.title('Clasificador Naive Bayes (Conjunto de testeo)')
+plt.title('Random Forest Classification  (Conjunto de testeo)')
 plt.xlabel('Edad')
 plt.ylabel('Sueldo Estimado')
 plt.legend()
