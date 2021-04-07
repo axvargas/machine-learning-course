@@ -91,10 +91,10 @@ testing_set = test_datagen.flow_from_directory(
 
 history = classifier.fit_generator(
         training_set,
-        steps_per_epoch=8000,
-        epochs=25,
+        steps_per_epoch=2000,
+        epochs=8,
         validation_data=testing_set,
-        validation_steps=2000)
+        validation_steps=1000)
 
 ##8000 and  2000 is better
 
